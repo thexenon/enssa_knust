@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+<link rel="stylesheet" href="home.css">
+<title>ENSSA - KNUST</title>
+
+
+<!-- ********** New Scripts *********-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<!-- ********** End Of New Scripts *********-->
+</head>
+<body>
+    <!--   Firebase App Default    -->
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyDM-eb59jGlGhnVemC6t2Dwg9Zztey8HJM",
+            authDomain: "enssa---knust.firebaseapp.com",
+            databaseURL: "https://enssa---knust-default-rtdb.firebaseio.com",
+            projectId: "enssa---knust",
+            storageBucket: "enssa---knust.appspot.com",
+            messagingSenderId: "920074160023",
+            appId: "1:920074160023:web:b689d327d39ad9a89426d2"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  firebase.auth.Auth.Persistence.LOCAL;
+    </script>
+    <!--   Firebase App Default    -->
+
+    <input type="checkbox" id="check">
+    <!-- header area start -->
+    <header>
+        <label for="check">
+            <i class="fa fa-bars" id="sidebar_btn"></i>
+        </label>
+        <div class="left_area">
+            <h3>The&nbsp;&nbsp;<span>Environmentalists</span></h3>
+        </div>
+        
+    </header>
+    <!--header area end  -->
+
+    <!-- sidebar start -->
+    <div class="sidebar">
+        <center>
+            <img src="enssa.png" class="profile_image" alt="">
+            <h4>ENSSA</h4>
+        </center>
+            <ul>
+                <li><a onclick="switchView('dashboard.html')"><i class="fa fa-desktop" aria-hidden="true"></i><span><b>Dashboard</b></span></a></li>
+                <li><a onclick="switchView('slides.html')"><i class="fa fa-book" aria-hidden="true"></i><span><b>Slides</b></span></a></li>
+                <li><a onclick="switchView('lecturers.html')"><i class="fa fa-graduation-cap" aria-hidden="true"></i><span><b>Lecturers</b></span></a></li>
+                <li><a onclick="switchView('executives.html')"><i class="fa fa-users" aria-hidden="true"></i></i><span><b>Executives</b></span></a></li>
+                <li><a onclick="switchView('settings.html')"><i class="fa fa-cogs" aria-hidden="true"></i><span><b>Settings</b></span></a></li>
+            </ul>
+    </div> 
+    <!-- sidebar end -->
+
+    <div id="display-log" class="content">
+        <div id="container"></div>
+
+        <!--<footer class="foot" style="background-color: gray; color: white; padding: 0 15px; text-align: center; position: sticky; bottom: 0px;">
+            <div class="foot-img img-1">
+                <img src="optyxenon logo 3.4.png" alt="" height="80px">
+            </div>
+            <div class="foot-text">
+                <div style="padding: 5px 0 0 0;">
+                    <h3>Powered By: <span style="color: blue;">OX Code Depository </span></h3>
+                </div>
+                <div style="padding: 0 0 5px 0;">
+                    <h3 style="color: springgreen;">Contact Us On</h3>
+                    <h4 style="text-transform: uppercase; color: #efa612;">
+                        <i class="fas fa-mobile-alt" style="color: skyblue; padding: 0 5px;"></i>
+                        <i class="fab fa-whatsapp" style="color: green; padding: 0 5px;"></i></i>
+                            +233505389520<span style="color: yellow;"> &amp; </span>+233
+                    </h4>
+                    <h4 style="text-transform: uppercase; color: #efa612;"><i class="fas fa-mail-bulk"  style="color: red; padding: 0 8px;"></i>oxcodedepository@gmail.com</h4>
+                </div>
+            </div>
+            <div class="foot-img img-2">
+                <img src="ox code logo.png" alt="" height="80px">
+            </div>
+            <div class="clear"></div>
+        </footer>-->
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<!-- ********** Signin and SignUp System ********* -->
+<script src="index.js"></script>
+<script>
+    firebase.auth().onAuthStateChanged(function(user){
+        if (!user){
+            window.location.href = "index.html";
+        }
+    });
+</script>
+<!-- ********** Signin and SignUp System ********* -->
+
+
+<!--<footer style="margin-left: 250px; background-color: gray; color: white; padding: 0 15px; text-align: center; position: sticky; bottom: 0px;">
+    <div style="padding: 5px 0 0 0;">
+        <h3>Powered By: <span style="color: blue;">OX Code Depository </span>&amp; <span style="color: yellow;">Awunigure Roland Emmanuel</span></h3>
+    </div>
+    <div style="padding: 0 0 5px 0;">
+        <h3 style="color: springgreen;">Contact Us On</h3>
+        <h4 style="text-transform: uppercase; color: #efa612;"><i class="fas fa-mobile-alt" style="color: skyblue; padding: 0 5px;"></i><i class="fab fa-whatsapp" style="color: green; padding: 0 5px;"></i></i>+233505389520</h4>
+        <h4 style="text-transform: uppercase; color: #efa612;"><i class="fas fa-mail-bulk"  style="color: red; padding: 0 8px;"></i>oxcodedepository@gmail.com</h4>
+    </div>
+</footer>-->
+</body>
+</html>

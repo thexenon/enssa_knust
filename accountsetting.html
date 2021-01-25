@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Account Settings</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+
+        <script src="https://kit.fontawesome.com/6401c6b42b.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="sign.css">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+    </head>
+<body>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyDM-eb59jGlGhnVemC6t2Dwg9Zztey8HJM",
+            authDomain: "enssa---knust.firebaseapp.com",
+            databaseURL: "https://enssa---knust-default-rtdb.firebaseio.com",
+            projectId: "enssa---knust",
+            storageBucket: "enssa---knust.appspot.com",
+            messagingSenderId: "920074160023",
+            appId: "1:920074160023:web:b689d327d39ad9a89426d2"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  firebase.auth.Auth.Persistence.LOCAL;
+    </script>
+    <!--   Firebase App Default    -->
+
+
+    <div class="content">
+                    <div class="form-box forms">
+                        <form action="" class="main-form" id="main-form">
+                            <div class="form-control">
+                                <label>Select Profile Picture<input id="main-image" type="file" class="form-control" required></label>
+                            </div>
+                            <div class="form-control">
+                                <img id="selected-image" src="#" width="250" height="150">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="fullname" class="form-control" placeholder="Full Name" required><br>
+                                <input type="text" id="username" class="form-control" placeholder="User Name" required><br>
+                                <input type="text" id="referencenumber" class="form-control" placeholder="Reference Number" required><br>
+                                <input type="text" id="phone" class="form-control" placeholder="Phone Number" required><br>
+                                <div class="form-control radio">
+                                    <label>
+                                    Male
+                                    <input type="radio" name="gender" id="male" value="Male">
+                                </label>
+                                <label>
+                                    Female
+                                    <input type="radio" name="gender" id="female" value="Female">
+                                </label>
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <button id="btn-update" type="button">
+                                    Update & Set
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="result"></div>
+                    </div>
+               
+
+                <br>
+
+                <script>
+                    var validImagetypes = ["image/gif", "image/png", "image/jpg", "image/jpeg", "image/bmp"];
+                    $("#selected-image").hide();
+
+                    function previewImage(image_blog){
+
+                        if (image_blog.files && image_blog.files[0]){
+                            var reader = new FileReader();
+
+                        reader.onload = function(e){
+                            $("#selected-image").attr('src', e.target.result);
+                            $("#selected-image").fadeIn();
+                        }
+                        reader.readAsDataURL(image_blog.files[0]);
+                        }
+                        //$("#selected-image").show();
+                    }
+
+                    $("#main-image").change(function(){
+                        previewImage(this);
+                    });
+
+                    
+                    $("#btn-update").click(function(){
+                        var picture = $("#main-image").prop("files")[0];
+
+                        if (picture == null){
+                            $("#main-image").addClass("is-invalid");
+                            return;
+                        }
+                        if ($.inArray(picture["type"], validImagetypes)<0){
+                            $("#main-image").addClass("is-invalid");
+                            return;
+                        }
+
+
+                        var databaseRef = firebase.database().ref().child("User Info");
+                        databaseRef.once("value").then(function(){
+                            var name = picture["name"];
+                            var dateStr = new Date().getTime();
+                            var fileCompleteName = name + "_" + dateStr;
+                            var userID = firebase.auth().currentUser.uid;
+
+                            var storageRef = firebase.storage().ref("Profile Pictures").child(userID);
+                            var propStorageRef = storageRef.child(userID);
+
+                            var uploadTask = propStorageRef.put(picture);
+
+                            uploadTask.on("state_changed",
+                            function progress(snapshot){
+                                var fullname = $("#fullname").val();
+                                var username = $("#username").val();
+                                var phone = $("#phone").val();
+                                var referencenumber = $("#referencenumber").val();
+                                var male = $("#male").val();
+                                var female = $("#female").val();
+
+                                var rootRef = firebase.database().ref().child("USERS");
+                                var userID = firebase.auth().currentUser.uid;
+                                var newUserRef = rootRef.child(userID);
+
+                                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadUrl){
+                                    if (fullname != "" && username != "" && phone != "" && referencenumber != "" && male != "" || female != ""){
+                                        var userData = {
+                                            "URL": downloadUrl,
+                                            "Fullname": fullname,
+                                            "Phone": phone,
+                                            "uid": userID,
+                                            "referencenumber": referencenumber,
+                                            "Gender": male,
+                                            "Gender": female,
+                                        };
+
+                                        //var newUserRef = databaseRef.push();
+                                        //var newPostRef = firebase.firestore.collection("Blogs");
+
+                                        newUserRef.set(userData, function(){
+                                            window.location.href = "home.html"
+                                        });
+                                    } else {
+                                        window.alert("Please fill all fields.");
+                                    }
+                                        
+                                    
+                                });
+                            },
+                            );
+                        });
+                    });
+                        
+                </script>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="index.js"></script>
+    <script>
+        firebase.auth().onAuthStateChanged(function(user){
+            if (!user){
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+
+
+
+
+</body>
+</html>

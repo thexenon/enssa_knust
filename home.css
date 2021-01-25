@@ -1,0 +1,255 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #ffffff;
+    height: 100%;
+}
+.clear {
+    clear: both;
+}
+header{
+    position: fixed;
+    background-color: rgba(119, 115, 115, 0.212);
+    padding: 20px;
+    width: 100%;
+    height: 30px;
+}
+
+.left_area h3{
+    color: #000000;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 900;
+}
+.left_area span{
+    color:rgb(0, 100, 0);;
+}
+
+.sidebar{
+    background: rgba(119, 115, 115, 0.212);
+    margin-top: 70px;
+    padding-top: 30px;
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    transition: 0.5s;
+    transition-property: left;
+    overflow-y: auto;
+}
+.sidebar .profile_image{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+}
+.sidebar h4{
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+.sidebar a{
+    color: #000000;
+    font-size: 18px;
+    display: block;
+    width: 100%;
+    line-height: 60px;
+    text-decoration: none;
+    border-bottom: 1px solid #ffffff;
+    border-top: 1px solid #ffffff;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    transition-property: background;
+}
+.sidebar a:hover{
+    background: #19b3d3;
+    padding-left: 50px;
+}
+.sidebar i{
+    padding-right: 10px;
+}
+
+label #sidebar_btn{
+    z-index: 1;
+    color: #000000;
+    position: fixed;
+    cursor: pointer;
+    left: 300px;
+    font-size: 30px;
+    margin: 5px 0;
+    transition: 0.5s;
+    transition-property: color;
+}
+label #sidebar_btn:hover{
+    color: #19b3d3;
+}
+
+#check:checked ~ .sidebar{
+    left: -190px;
+}
+#check:checked ~ .sidebar a span{
+    display: none;
+}
+#check:checked ~ .sidebar a{
+    font-size: 20px;
+    margin-left: 170px;
+    width: 80px;
+}
+
+.content {
+    margin-left: 250px;
+    background: url(background.png) no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100ch;
+    transition: 0.5s;
+}
+#container {
+    min-height: 100ch;
+    overflow-x: scroll;
+}
+
+#check:checked ~ .content{
+    margin-left: 60px;
+}
+#check{
+    display: none;
+}
+
+
+ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+ul li {
+    width: 100%;
+    background-color: none;
+    opacity: .8;
+    text-align: fixed; 
+    font-size: 15px;
+    cursor: pointer;
+}
+ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+}
+ul li a:hover {
+    background-color: #19b3d3;
+}
+ul li ul li {
+    display: none;
+}
+ul li:hover ul li {
+    display: block;
+}
+
+/* Footer */
+.foot {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+/* Slides page*/
+.folder {
+    font-weight: bolder;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+}
+.year {
+    padding: 50px;
+}
+.per-sem i {
+    font-size: 40px;
+    color: yellow;
+}
+.per-sem a , .per-sem a:visited {
+    color: green;
+}
+/* Slides page*/
+
+/* Accounts Page */
+.accbox {
+    text-align: center;
+    width: 70%;
+    height: auto;
+    position: relative;
+    margin: 6% auto;
+    background-color: transparent;
+    padding: 5px;
+    overflow: hidden;
+    border-radius: 30px;
+    font-weight: bold;
+    color: black;
+}
+.accbox img {
+    border-radius: 100%;
+    border: black 10px solid;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+}
+.accbio {
+    background-color: skyblue;
+    min-height: 100px;
+    padding: 5px 0;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+.accbtn {
+    margin-top: 10px;
+    padding: 5px;
+    width: 50%;
+    min-height: 50px;
+    color: white;
+    border-radius: 50px;
+    background-color: rgb(66, 63, 63);
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
+
+/* Footer */
+footer div h3, footer div h4 {
+    font-size: 1em;
+}
+
+/* Media */
+@media (max-width: 768px) {
+.sidebar{
+    left: -190px;
+}
+.sidebar a span{
+    display: none;
+}
+.sidebar{
+    background: rgba(119, 115, 115, 0.212);
+    margin-top: 70px;
+    padding-top: 30px;
+    position: fixed;
+    left: 0;
+    width: auto;
+    height: 100%;
+    transition: 0.5s;
+    transition-property: left;
+    overflow-y: auto;
+}
+.content{
+    margin-left: 100px;
+}
+.foot-img img {
+    height: 90px;
+}
+}

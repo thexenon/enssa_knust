@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Male Personality Of The Week</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+
+        <script src="https://kit.fontawesome.com/6401c6b42b.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="form.css">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+    </head>
+<body>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyB9LL3H4rvi62pVk5BSnz4o9ZtmQUK3UX0",
+            authDomain: "chem-website-dd000.firebaseapp.com",
+            databaseURL: "https://chem-website-dd000.firebaseio.com",
+            projectId: "chem-website-dd000",
+            storageBucket: "chem-website-dd000.appspot.com",
+            messagingSenderId: "913993521001",
+            appId: "1:913993521001:web:cc861068df2ff6ef640ff8",
+            measurementId: "G-HQJZWPWJD0"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.auth.Auth.Persistence.LOCAL;
+    </script>
+
+
+    <div class="content">
+                    <div id="ml-main-form" class="form-box forms">
+                        <form action="" id="m-main-form" class="m-main-form">
+                            <h2>Male Personality Of The Week</h2>
+                            <div class="form-control">
+                                <label>Select Picture<input id="m-main-image" type="file" class="form-control" required></label>
+                            </div>
+                            <div class="form-control">
+                                <img id="m-selected-image" src="#" width="250" height="150">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="m-personName" class="form-control" placeholder="Person's Name" required>
+                                <input type="text" id="m-achieve1" class="form-control" placeholder="Records & Achievements 1" required>
+                                <input type="text" id="m-achieve2" class="form-control" placeholder="Records & Achievements 2" required>
+                                <input type="text" id="m-achieve3" class="form-control" placeholder="Records & Achievements 3" required>
+                                <input type="text" id="m-achieve4" class="form-control" placeholder="Records & Achievements 4" required>
+                                <input type="text" id="m-achieve5" class="form-control" placeholder="Records & Achievements 5" required>
+                                <textarea id="m-bio" rows="5" placeholder="Bio..." class="form-control" required></textarea>
+                            </div>
+                            <div class="form-control">
+                                <button id="m-btn-update" type="button">
+                                    Update
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="result"></div>
+                    </div>
+                    <div class="form-nav">
+                        <h2>
+                            <a href="Female.html">Female Personality Of The Week Form</a>
+                        </h2>
+                    </div>
+                    <div class="clear"></div>
+               
+
+                <br>
+
+                <script>
+                    var validImagetypes = ["image/gif", "image/png", "image/jpg", "image/jpeg", "image/bmp"];
+                    $("#m-selected-image").hide();
+
+                    function previewImage(image_blog){
+
+                        if (image_blog.files && image_blog.files[0]){
+                            var reader = new FileReader();
+
+                        reader.onload = function(e){
+                            $("#m-selected-image").attr('src', e.target.result);
+                            $("#m-selected-image").fadeIn();
+                        }
+                        reader.readAsDataURL(image_blog.files[0]);
+                        }
+                        //$("#m-selected-image").show();
+                    }
+
+                    $("#m-main-image").change(function(){
+                        previewImage(this);
+                    });
+
+                    
+                    $("#m-btn-update").click(function(){
+                        var picture = $("#m-main-image").prop("files")[0];
+
+                        if (picture == null){
+                            $("#m-main-image").addClass("is-invalid");
+                            return;
+                        }
+                        if ($.inArray(picture["type"], validImagetypes)<0){
+                            $("#m-main-image").addClass("is-invalid");
+                            return;
+                        }
+
+
+                        var databaseRef = firebase.database().ref().child("Personality Of The Week");
+                        databaseRef.once("value").then(function(){
+                            var name = picture["name"];
+                            var dateStr = new Date().getTime();
+                            var fileCompleteName = name + "_" + dateStr;
+
+                            var storageRef = firebase.storage().ref("Personality Of The Week Images");
+                            var propStorageRef = storageRef.child(fileCompleteName);
+
+                            var uploadTask = propStorageRef.put(picture);
+
+                            uploadTask.on("state_changed",
+                            function progress(snapshot){
+                                var personName = $("#m-personName").val();
+                                var achieve1 = $("#m-achieve1").val();
+                                var achieve2 = $("#m-achieve2").val();
+                                var achieve3 = $("#m-achieve3").val();
+                                var achieve4 = $("#m-achieve4").val();
+                                var achieve5 = $("#m-achieve5").val();
+                                var bio = $("#m-bio").val();
+
+                                var newUserRef = databaseRef.child("Male");
+
+                                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadUrl){
+                                    if (personName != "" && bio != "" && achieve1 != "" && achieve2 != "" && achieve3 != "" || achieve4 != "" || achieve5 != ""){
+                                        var userData = {
+                                            "image": downloadUrl,
+                                            "personName": personName,
+                                            "achieve1": achieve1,
+                                            "achieve2": achieve2,
+                                            "achieve3": achieve3,
+                                            "achieve4": achieve4,
+                                            "achieve5": achieve5,
+                                            "bio": bio,
+                                            "gender": "Male",
+                                        };
+
+                                        //var newUserRef = databaseRef.push();
+                                        //var newPostRef = firebase.firestore.collection("Blogs");
+
+                                        newUserRef.set(userData, function(){
+                                            $("#result").attr("class", "alert alert-success");
+                                            $("#result").html("Post has been uploaded successfully...!");
+                                            $("#m-main-form")[0].reset();
+                                            $("#m-selected-image").fadeOut();
+                                            window.alert("Personality Updated Successfully...!");
+                                        });
+                                    } else {
+                                        window.alert("Please fill all fields.");
+                                    }
+                                        
+                                    
+                                });
+                            },
+                            );
+                        });
+                    });
+                        
+                </script>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>

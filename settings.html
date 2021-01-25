@@ -1,33 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-    <link rel="stylesheet" href="./dashboard.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
-</head>
-<body>
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyDM-eb59jGlGhnVemC6t2Dwg9Zztey8HJM",
-            authDomain: "enssa---knust.firebaseapp.com",
-            databaseURL: "https://enssa---knust-default-rtdb.firebaseio.com",
-            projectId: "enssa---knust",
-            storageBucket: "enssa---knust.appspot.com",
-            messagingSenderId: "920074160023",
-            appId: "1:920074160023:web:b689d327d39ad9a89426d2"
-  };
-  
-  firebase.initializeApp(firebaseConfig);
-  firebase.auth.Auth.Persistence.LOCAL;
-    </script>
-    <!--   Firebase App Default    -->
-
 
 <div id="infoUser">
 
@@ -52,20 +22,20 @@
                                     + "</h2></div>"
                     blogsHtml += "</div>";
 -
-                    blogsHtml += "<div>";
-                        blogsHtml += "<div><h3>"
-                                    + "Year: " + singleBlog.val().Phone + "<br>"
-                                    + "Student Number: " + singleBlog.val().referencenumber
-                                    + "</h3></div>"
-                    blogsHtml += "</div>";
+                    //blogsHtml += "<div>";
+                        //blogsHtml += "<div><h3>"
+                                    //+ "Year: " + singleBlog.val().Phone + "<br>"
+                                    //+ "Student Number: " + singleBlog.val().referencenumber
+                                    //+ "</h3></div>"
+                    //blogsHtml += "</div>";
 
-                    blogsHtml += "<div class= 'accbio'><h3>";
-                        blogsHtml += singleBlog.val().Gender;
-                    blogsHtml += "</h3></div>";
+                    //blogsHtml += "<div class= 'accbio'><h3>";
+                       // blogsHtml += singleBlog.val().Gender;
+                    //blogsHtml += "</h3></div>";
 
-                    blogsHtml += "<div><button class= 'accbtn' onclick= 'logout()'>";
-                        blogsHtml += "LogOut";
-                    blogsHtml += "</button></div>";
+                    //blogsHtml += "<div><button class= 'accbtn' onclick= 'logout()'>";
+                        //blogsHtml += "LogOut";
+                    //blogsHtml += "</button></div>";
                 
                 $("#infoUser").html(blogsHtml);
             });
@@ -93,5 +63,3 @@
         });
     };
 </script>
-</body>
-</html>
